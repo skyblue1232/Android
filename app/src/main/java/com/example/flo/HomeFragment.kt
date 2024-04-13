@@ -9,15 +9,44 @@ import com.example.flo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.homeMainAlbumImg1Iv.setOnClickListener {
+            initAlbumFragment(
+                binding.homeMainAlbumTitleTv.text.toString(),
+                binding.homeMainAlbumSingerTv.text.toString()
+            )
+        }
+        binding.homeMainAlbumImg2Iv.setOnClickListener {
+            initAlbumFragment(
+                binding.homeMainAlbumTitle2Tv.text.toString(),
+                binding.homeMainAlbumSinger2Tv.text.toString()
+            )
+        }
         return binding.root
     }
+        private fun initAlbumFragment(titleTV : String, singerTV : String){
+            with (binding) {
+                val albumFragment = AlbumFragment().apply{
+                    arguments = Bundle().apply{
+                        putString("albumTitle", titleTV)
+                        putString("albumSinger", singerTV)
+                    }
+                }
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.main_frm, albumFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+        }
 }
+
