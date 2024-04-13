@@ -32,11 +32,10 @@ class MainActivity : AppCompatActivity() {
         Log.d("Song", "제목 : ${song.title} / 가수 : ${song.singer}")
 
         binding.mainPlayerCl.setOnClickListener{
-            //startActivity(Intent(this, SongActivity::class.java))
             val intent = Intent(this,SongActivity::class.java)
             intent.putExtra("title",song.title)
             intent.putExtra("singer",song.singer)
-            startActivity(intent)
+            getResultText.launch(intent)
         }
         initBottomNavigation()
 
@@ -55,6 +54,8 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, HomeFragment())
                         .commitAllowingStateLoss()
+                    Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+                    Log.d("bottommmm","Home")
                     return@setOnItemSelectedListener true
                 }
 
@@ -62,18 +63,24 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, LookFragment())
                         .commitAllowingStateLoss()
+                    Toast.makeText(applicationContext, "Look", Toast.LENGTH_SHORT).show()
+                    Log.d("bottommmm","look")
                     return@setOnItemSelectedListener true
                 }
                 R.id.searchFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, SearchFragment())
                         .commitAllowingStateLoss()
+                    Toast.makeText(applicationContext, "Search", Toast.LENGTH_SHORT).show()
+                    Log.d("bottommmm","search")
                     return@setOnItemSelectedListener true
                 }
                 R.id.lockerFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, LockerFragment())
                         .commitAllowingStateLoss()
+                    Toast.makeText(applicationContext, "Locker", Toast.LENGTH_SHORT).show()
+                    Log.d("bottommmm","locker")
                     return@setOnItemSelectedListener true
                 }
             }
