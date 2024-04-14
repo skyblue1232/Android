@@ -18,13 +18,20 @@ class AlbumFragment :Fragment(){
     ): View? {
         binding = FragmentAlbumBinding.inflate(inflater,container,false)
 
-        binding.albumBackIv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
+        val title =arguments?.getString("albumTitle")
+        val singer =arguments?.getString("albumSinger")
+
+        binding.albumMusicTitleTv.text= title
+        binding.albumSingerNameTv.text= singer
+
+        binding.albumBackIv.setOnClickListener{
+            val homeFragment = HomeFragment()
+            val transaction =parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_frm, homeFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
-        binding.songLalacLayout.setOnClickListener{
-            Toast.makeText(activity, "LAILAC", Toast.LENGTH_SHORT).show()
-        }
         return binding.root
     }
 }

@@ -18,10 +18,30 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.homeMainAlbumImgIv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,AlbumFragment()).commitAllowingStateLoss()
+        binding.homeMainAlbumImgIv.setOnClickListener{
+            initAlbumFragment(binding.homeMainAlbumTitleTv.text.toString(),
+                binding.homeMainAlbumSingerTv.text.toString())
+        }
+        binding.homeMainAlbumImg2Iv.setOnClickListener{
+            initAlbumFragment(binding.homeMainAlbumTitle2Tv.text.toString(),
+                binding.homeMainAlbumSinger2Tv.text.toString())
         }
 
         return binding.root
+    }
+
+    private fun initAlbumFragment(titleTV : String, singerTV : String){
+        with(binding){
+            val albumFragment = AlbumFragment().apply{
+                arguments= Bundle().apply{
+                    putString("albumTitle", titleTV)
+                    putString("albumSinger", singerTV)
+                }
+            }
+            val transaction =parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_frm, albumFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }
