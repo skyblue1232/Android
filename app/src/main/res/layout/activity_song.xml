@@ -242,12 +242,29 @@ android:scaleType="fitXY" -> 가로, 세로 비율에 상관없이 ImageView에 
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
-        android:id="@+id/music_repeat_iv"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:id="@+id/music_repeat_off_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="55dp"
         android:src="@drawable/nugu_btn_repeat_inactive"
-        app:layout_constraintStart_toStartOf="@id/music_start_time_tv"
-        app:layout_constraintTop_toBottomOf="@id/music_start_time_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/music_player_layout"
+        app:layout_constraintEnd_toStartOf="@+id/music_player_layout"
+        app:layout_constraintTop_toTopOf="@+id/music_player_layout"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/music_repeat_on_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="55dp"
+        android:src="@drawable/nugu_btn_repeat_inactive"
+        app:layout_constraintBottom_toBottomOf="@+id/music_player_layout"
+        app:layout_constraintEnd_toStartOf="@+id/music_player_layout"
+        app:layout_constraintTop_toTopOf="@+id/music_player_layout"
+        app:tint="@color/purple_500"
+        android:visibility="gone"/>
 
 
 <!--    <Switch-->
@@ -260,12 +277,29 @@ android:scaleType="fitXY" -> 가로, 세로 비율에 상관없이 ImageView에 
 <!--        android:trackTint="@drawable/switch_track"/>-->
 
     <ImageView
-        android:id="@+id/music_random_iv"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:id="@+id/music_random_off_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/nugu_btn_random_inactive"
-        app:layout_constraintEnd_toEndOf="@id/music_end_time_tv"
-        app:layout_constraintTop_toBottomOf="@id/music_end_time_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/music_player_layout"
+        app:layout_constraintStart_toEndOf="@+id/music_player_layout"
+        app:layout_constraintTop_toTopOf="@+id/music_player_layout"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/music_random_on_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/nugu_btn_random_inactive"
+        app:layout_constraintBottom_toBottomOf="@+id/music_player_layout"
+        app:layout_constraintStart_toEndOf="@+id/music_player_layout"
+        app:layout_constraintTop_toTopOf="@+id/music_player_layout"
+        android:visibility="gone"
+        app:tint="@color/purple_500" />
 
     <ImageView
         android:id="@+id/share_instagram_iv"

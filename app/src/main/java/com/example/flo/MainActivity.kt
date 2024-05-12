@@ -1,11 +1,11 @@
 package com.example.flo
 
 import HomeFragment
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -22,10 +22,9 @@ class MainActivity : AppCompatActivity() {
     private val getResultText = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ){result->
-        if(result.resultCode== Activity.RESULT_OK){
-            val returnString = result.data?.getStringExtra("flomusic")
-            Toast.makeText(applicationContext, returnString, Toast.LENGTH_SHORT).show()
-        }
+        val songProgress = result.data?.getIntExtra("song_progress", 0) ?: 0
+        song.second = songProgress
+        setMiniPlayer(song)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         //textView.text = 'dd'
 
         Log.d("Song", "제목 : ${song.title} / 가수 : ${song.singer}")
+
 
         binding.mainPlayerCl.setOnClickListener {
             //startActivity(Intent(this, SongActivity::class.java))
@@ -58,6 +58,12 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
 
         Log.d("Song", song.title + song.singer)
+    }
+
+    private fun setMiniPlayer(song: Song) {
+        binding.mainMiniplayerTitleTv.text = song.title
+        binding.mainMiniplayerSingerTv.text = song.singer
+        binding.mainProgressSb.progress = song.second
     }
 
     private fun initBottomNavigation(){
@@ -106,12 +112,28 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-    }
 
-    private fun setMiniPlayer(song: Song) {
-        binding.mainMiniplayerTitleTv.text = song.title
-        binding.mainMiniplayerSingerTv.text = song.singer
-        binding.mainProgressSb.progress = (song.second*100000)/song.playTime
+        binding.mainProgressSb.max = song.playTime
+        binding.mainProgressSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                // 진행 상태 변경 시 처리할 로직
+                // 예: 노래의 현재 재생 시간을 업데이트
+                song.second = progress
+                setMiniPlayer(song)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // 사용자가 SeekBar 터치를 시작할 때 처리할 로직
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // 사용자가 SeekBar 터치를 중지할 때 처리할 로직
+                // 예: 노래의 재생 위치를 변경
+                song.second = seekBar.progress
+                setMiniPlayer(song)
+            }
+        })
+
     }
 
     override fun onStart() {
