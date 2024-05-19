@@ -221,104 +221,104 @@
             app:layout_constraintStart_toEndOf="@id/home_oneul_music_korea_tv"
             app:layout_constraintTop_toTopOf="@id/home_oneul_music_title_tv" />
 
-        <ImageView
-            android:id="@+id/home_oneul_music_album_1st"
-            android:layout_width="145dp"
-            android:layout_height="145dp"
-            android:src="@drawable/img_album_exp2"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_music_title_tv"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/home_oneul_music_album_1st"-->
+<!--            android:layout_width="145dp"-->
+<!--            android:layout_height="145dp"-->
+<!--            android:src="@drawable/img_album_exp2"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_music_title_tv"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv"/>-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_1st_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LILAC"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_1st"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_1st"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_1st_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="LILAC"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_1st"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_1st"/>-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_1st_singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이유(IU)"
-            android:textSize="10sp"
-            android:textStyle="normal"
-            android:textColor="@color/gray_color"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_1st_title"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_1st_title"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_1st_singer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="아이유(IU)"-->
+<!--            android:textSize="10sp"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textColor="@color/gray_color"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_1st_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_1st_title"/>-->
 
-        <ImageView
-            android:id="@+id/home_oneul_music_album_2nd"
-            android:layout_width="145dp"
-            android:layout_height="145dp"
-            android:src="@drawable/img_album_exp2"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/home_oneul_music_album_1st"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/home_oneul_music_album_2nd"-->
+<!--            android:layout_width="145dp"-->
+<!--            android:layout_height="145dp"-->
+<!--            android:src="@drawable/img_album_exp2"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:layout_constraintStart_toEndOf="@id/home_oneul_music_album_1st"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv"/>-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_2nd_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Love wins all"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_2nd"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_2nd"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_2nd_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Love wins all"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_2nd"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_2nd"/>-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_2nd_singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이유(IU)"
-            android:textSize="10sp"
-            android:textStyle="normal"
-            android:textColor="@color/gray_color"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_2nd_title"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_2nd_title"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_2nd_singer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="아이유(IU)"-->
+<!--            android:textSize="10sp"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textColor="@color/gray_color"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_2nd_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_2nd_title"/>-->
 
-        <ImageView
-            android:id="@+id/home_oneul_music_album_3rd"
-            android:layout_width="145dp"
-            android:layout_height="145dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/img_album_exp2"
-            app:layout_constraintStart_toEndOf="@id/home_oneul_music_album_2nd"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv" />
+<!--        <ImageView-->
+<!--            android:id="@+id/home_oneul_music_album_3rd"-->
+<!--            android:layout_width="145dp"-->
+<!--            android:layout_height="145dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:src="@drawable/img_album_exp2"-->
+<!--            app:layout_constraintStart_toEndOf="@id/home_oneul_music_album_2nd"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_title_tv" />-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_3rd_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="홀씨"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_3rd"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_2nd"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_3rd_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="홀씨"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_3rd"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_2nd"/>-->
 
-        <TextView
-            android:id="@+id/home_oneul_play_song_3rd_singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이유(IU)"
-            android:textSize="10sp"
-            android:textStyle="normal"
-            android:textColor="@color/gray_color"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_3rd_title"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_3rd_title"/>
+<!--        <TextView-->
+<!--            android:id="@+id/home_oneul_play_song_3rd_singer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="아이유(IU)"-->
+<!--            android:textSize="10sp"-->
+<!--            android:textStyle="normal"-->
+<!--            android:textColor="@color/gray_color"-->
+<!--            app:layout_constraintStart_toStartOf="@id/home_oneul_play_song_3rd_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_play_song_3rd_title"/>-->
 
 <!--        <ImageView-->
 <!--            android:id="@+id/home_Ad_banner_st"-->
@@ -330,13 +330,27 @@
 <!--            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_1st"-->
 <!--            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_1st"/>-->
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_today_music_album_rv"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/item_album"
+            tools:itemCount="6"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_foreign_tv"/>
+
+
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_banner_vp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="75dp"
-            app:layout_constraintStart_toStartOf="@id/home_oneul_music_album_1st"
-            app:layout_constraintTop_toBottomOf="@id/home_oneul_music_album_1st"/>
+            app:layout_constraintStart_toStartOf="@id/home_today_music_album_rv"
+            app:layout_constraintTop_toBottomOf="@id/home_today_music_album_rv"/>
 
                 <TextView
                     android:id="@+id/home_everyday_music_flo"

@@ -15,4 +15,5 @@ class AlbumVPAdapter(fragment:Fragment) : FragmentStateAdapter(fragment) {
             else -> VideoFragment()
         }
     }
+
 }

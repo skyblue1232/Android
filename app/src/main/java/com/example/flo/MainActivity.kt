@@ -2,22 +2,24 @@ package com.example.flo
 
 import HomeFragment
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.flo.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.OnPlayClickListener {
 
     lateinit var binding: ActivityMainBinding
-
     private var song: Song = Song()
+    private var Mainsong: Song = Song()
     private var gson: Gson = Gson()
+    private var mediaPlayer: MediaPlayer? = null
+
 
     private val getResultText = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -55,6 +57,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             // 하나의 액티비티에서 사용하는 택배상자 -> Intent
         }
+
+
     }
 
     private fun setMiniPlayer(song:Song){
@@ -62,6 +66,10 @@ class MainActivity : AppCompatActivity() {
         binding.mainMiniplayerSingerTv.text = song.singer
         binding.mainProgressSb.progress = (song.second*1000000)/song.playTime
     }
+
+
+
+
     private fun initBottomNavigation(){
 
 
@@ -145,4 +153,13 @@ class MainActivity : AppCompatActivity() {
 
         setMiniPlayer(song)
     }
+
+    override fun onPlayClick(songData: Song) {
+        Mainsong = songData
+        Mainsong.isPlaying = true
+        setMiniPlayer(Mainsong)
+        mediaPlayer?.start()
+    }
 }
+
+
