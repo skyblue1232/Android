@@ -1,5 +1,6 @@
 package com.example.flo
 
+import android.graphics.Color
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -43,14 +44,9 @@ class SavedSongRVAdapter(private val albumList: ArrayList<Album>): RecyclerView.
     override fun onBindViewHolder(holder: SavedSongRVAdapter.ViewHolder, position: Int) {
         holder.bind(albumList[position])
 
-
         holder.binding.itemSongMoreIv.setOnClickListener{mItemClickListener.onRemoveSavedSong(position)}
-//        holder.binding.itemSongMoreIv.isChecked = Status.get(position, false)
-//        holder.binding.itemSongMoreIv.setOnClickListener {
-//            val checked = !holder.binding.itemSongDownIv.isChecked
-//            Status.put(position, checked)
-//            notifyItemChanged(position)
-//        } 여기에 작성 하는 것 아님.
+
+        holder.binding.mainSwitch.isChecked = holder.binding.mainSwitch.isChecked
     }
 
     inner class ViewHolder(val binding: MusicItemBinding): RecyclerView.ViewHolder(binding.root){
@@ -60,14 +56,21 @@ class SavedSongRVAdapter(private val albumList: ArrayList<Album>): RecyclerView.
             binding.itemSongSingerTv.text= album.singer
             binding.itemSongImgIv.setImageResource(album.coverImg!!)
 
-//            binding.itemSongPlayIv.isChecked= Status[adapterPosition]
-//            binding.itemSongPlayIv.setOnClickListener{
-//                if (!binding.itemSongPlayIv.isChecked)
-//                    Status.put(adapterPosition, false)
-//                else
-//                    Status.put(adapterPosition, true)
-//                notifyItemChanged(adapterPosition)
-//            }
+            if (!binding.mainSwitch.isChecked) {
+                binding.root.setBackgroundColor(Color.WHITE)
+            }
+            else {
+                binding.root.setBackgroundColor(Color.DKGRAY)
+            }
+
+            binding.mainSwitch.isChecked= Status[adapterPosition]
+            binding.mainSwitch.setOnClickListener{
+                if (!binding.mainSwitch.isChecked)
+                    Status.put(adapterPosition, false)
+                else
+                    Status.put(adapterPosition, true)
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
 }

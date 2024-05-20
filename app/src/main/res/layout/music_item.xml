@@ -33,7 +33,6 @@
         android:text="Lilac"
         android:textColor="@color/black"
         android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@id/item_song_singer_tv"
         app:layout_constraintStart_toEndOf="@id/item_song_img_cardView"
         app:layout_constraintTop_toTopOf="@id/item_song_img_cardView" />
 
@@ -44,9 +43,16 @@
         android:layout_marginLeft="10dp"
         android:text="아이유(IU)"
         android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="@id/item_song_img_cardView"
         app:layout_constraintStart_toEndOf="@id/item_song_img_cardView"
         app:layout_constraintTop_toBottomOf="@+id/item_song_title_tv" />
+    
+    <Switch
+        android:id="@+id/main_switch"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="120dp"
+        app:layout_constraintTop_toTopOf="@id/item_song_singer_tv"
+        app:layout_constraintStart_toStartOf="@id/item_song_singer_tv"/>
 
     <TextView
         android:id="@+id/item_album_music_title_info_tv"
@@ -97,3 +103,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

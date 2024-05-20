@@ -13,12 +13,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\고민균\.android\avd\rerere.avd" />
+                  <value value="C:\Users\고민균\.android\avd\MyUmcPhone.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-18T12:37:04.500288300Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-20T10:37:49.682330Z" />
         </State>
       </entry>
     </value>
