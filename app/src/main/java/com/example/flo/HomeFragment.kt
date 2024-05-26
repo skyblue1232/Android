@@ -1,6 +1,7 @@
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.flo.ImageVPAdapter
 import com.example.flo.MainActivity
 import com.example.flo.R
 import com.example.flo.Song
+import com.example.flo.SongDatabase
 import com.example.flo.databinding.FragmentHomeBinding
 import com.google.gson.Gson
 
@@ -25,7 +27,9 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     private lateinit var sliderHandler: Handler
     private var sliderRunnable: Runnable? = null
-    private var albumDates = ArrayList<Album>()
+
+    private var albumDatas = ArrayList<Album>()
+    private lateinit var songDB: SongDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +37,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        songDB = SongDatabase.getInstance(requireContext())!!
+        albumDatas.addAll(songDB.albumDao().getAlbums())
+        Log.d("albumlist", albumDatas.toString())
+
+        val albumRVAdapter = AlbumRVAdapter(albumDatas)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
+        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+
+
         return binding.root
     }
 
@@ -44,7 +58,7 @@ class HomeFragment : Fragment() {
 
     fun onPlayClick(album: Album) {
         if (activity is MainActivity) {
-            val songData: Song = album.songs!!.get(0)
+            val songData: Song = album.songs.get(0)
             (activity as MainActivity).onPlayClick(songData)// MainActivity로 Song 데이터 전달
         }
     }
@@ -66,16 +80,63 @@ class HomeFragment : Fragment() {
 //        }
 
         // 데이터 리스트 생성 더미 데이터
-        albumDates.apply {
-            add(Album("Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp))
-            add(Album("Lilac", "아이유 (IU)", R.drawable.img_album_exp2))
-            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3))
-            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4))
-            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5))
-            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6))
+        fun inputDummyAlbums(){
+            val songDB = SongDatabase.getInstance(requireActivity())!!
+            val songs = songDB.albumDao().getAlbums()
+
+            if (songs.isNotEmpty()) return
+
+            songDB.albumDao().insert(
+                Album(
+                    1,
+                    "IU 5th Album 'LILAC'",
+                    "아이유 (IU)",
+                    R.drawable.img_album_exp2
+                )
+            )
+
+            songDB.albumDao().insert(
+                Album(
+                    2,
+                    "Butter",
+                    "방탄소년단 (BTS)",
+                    R.drawable.img_album_exp
+                )
+            )
+
+            songDB.albumDao().insert(
+                Album(
+                    3,
+                    "iScreaM Vol.10: Next Level Remixes",
+                    "에스파 (AESPA)",
+                    R.drawable.img_album_exp3
+                )
+            )
+
+            songDB.albumDao().insert(
+                Album(
+                    4,
+                    "Map of the Soul Persona",
+                    "뮤직 보이 (Music Boy)",
+                    R.drawable.img_album_exp4,
+                )
+            )
+
+
+            songDB.albumDao().insert(
+                Album(
+                    5,
+                    "Great!",
+                    "모모랜드 (MOMOLAND)",
+                    R.drawable.img_album_exp5
+                )
+            )
+
+            val songDBData = songDB.albumDao().getAlbums()
+            Log.d("DB data", songDBData.toString())
         }
 
-        val albumRVAdapter = AlbumRVAdapter(albumDates)
+        val albumRVAdapter = AlbumRVAdapter(albumDatas)
         binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
         binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
@@ -90,7 +151,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onPlayClick(album: Album) {
-                val songData: Song = album.songs!!.get(0)
+                val songData: Song = album.songs.get(0)
                 listener?.onPlayClick(songData)
             }
 

@@ -12,8 +12,13 @@ class SavedSongFragment : Fragment() {
 
     private var _binding: FragmentSavedSongBinding? = null
     private val binding get() = _binding!!
-    private val MusicItemAdapter = SavedSongRVAdapter(Dummy())
+    private val MusicItemAdapter = SavedSongRVAdapter()
 
+    lateinit var songDB: SongDatabase
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,19 +27,48 @@ class SavedSongFragment : Fragment() {
     ): View? {
         _binding = FragmentSavedSongBinding.inflate(inflater, container, false)
 
+        songDB = SongDatabase.getInstance(requireContext())!!
+
         binding.lockerSavedSongRecyclerView.adapter= MusicItemAdapter
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.lockerSavedSongRecyclerView.layoutManager= manager
 
         MusicItemAdapter.setSavedSongClickListener(object: SavedSongRVAdapter.SavedSongClickListener{
-            override fun onRemoveSavedSong(position: Int) {
-                MusicItemAdapter.removeSong(position)
+            override fun onRemoveSavedSong(songId: Int) {
+                MusicItemAdapter.removeSong(songId)
+            }
+
+            override fun onSaveSavedSong(songId: Int) {
+                MusicItemAdapter.addSong(songId)
             }
         })
 
 
         return binding.root
     }
+
+    override fun onStart() {
+        super.onStart()
+        initRecyclerview()
+    }
+
+    private fun initRecyclerview(){
+        binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        val songRVAdapter = SavedSongRVAdapter()
+
+        songRVAdapter.setSavedSongClickListener(object : SavedSongRVAdapter. SavedSongClickListener{
+            override fun onRemoveSavedSong(songId: Int) {
+                songDB.songDao().updateIsLikeById(false, songId)
+            }
+
+            override fun onSaveSavedSong(songId: Int) {
+                songDB.songDao().updateIsLikeById(true, songId)
+            }
+        })
+        binding.lockerSavedSongRecyclerView.adapter = songRVAdapter
+        songRVAdapter.addSongs(songDB.songDao().getLikedSongs(true) as ArrayList<Song>)
+    }
+}
 
     private fun Dummy() : ArrayList<Album>{
         val dummy1 = Album("Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp)
@@ -55,4 +89,3 @@ class SavedSongFragment : Fragment() {
         return arr
     }
 
-}

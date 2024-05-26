@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.MusicItemBinding
 
-class AlbumLockerRVAdapter(private val albumList: ArrayList<Album>) : RecyclerView.Adapter<AlbumLockerRVAdapter.ViewHolder>() {
+class LockerAlbumRVAdapter(private val albumList: ArrayList<Album>) : RecyclerView.Adapter<LockerAlbumRVAdapter.ViewHolder>() {
 
     private lateinit var mItemClickListener: MyItemClickListener
 
@@ -23,12 +23,12 @@ class AlbumLockerRVAdapter(private val albumList: ArrayList<Album>) : RecyclerVi
         mItemClickListener = itemClickListener
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AlbumLockerRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): LockerAlbumRVAdapter.ViewHolder {
         val binding: MusicItemBinding = MusicItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: AlbumLockerRVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LockerAlbumRVAdapter.ViewHolder, position: Int) {
         holder.bind(albumList[position])
 
         holder.binding.itemSongMoreIv.setOnClickListener {
