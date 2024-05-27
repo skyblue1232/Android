@@ -51,16 +51,15 @@ class HomeFragment : Fragment() {
     }
 
     interface OnPlayClickListener {
-        fun onPlayClick(songData: Song)
+        fun onPlayClick(songData: Int)
     }
 
     private var listener: OnPlayClickListener? = null
 
     fun onPlayClick(album: Album) {
-        if (activity is MainActivity) {
-            val songData: Song = album.songs.get(0)
-            (activity as MainActivity).onPlayClick(songData)// MainActivity로 Song 데이터 전달
-        }
+        Log.d("id찾기", "${album.id}")
+
+        listener?.onPlayClick(album.id) // MainActivity로 AlbumId 전달
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,47 +87,47 @@ class HomeFragment : Fragment() {
 
             songDB.albumDao().insert(
                 Album(
-                    1,
                     "IU 5th Album 'LILAC'",
                     "아이유 (IU)",
-                    R.drawable.img_album_exp2
+                    R.drawable.img_album_exp2,
+                    1
                 )
             )
 
             songDB.albumDao().insert(
                 Album(
-                    2,
                     "Butter",
                     "방탄소년단 (BTS)",
-                    R.drawable.img_album_exp
+                    R.drawable.img_album_exp,
+                    2
                 )
             )
 
             songDB.albumDao().insert(
                 Album(
-                    3,
                     "iScreaM Vol.10: Next Level Remixes",
                     "에스파 (AESPA)",
-                    R.drawable.img_album_exp3
+                    R.drawable.img_album_exp3,
+                    3
                 )
             )
 
             songDB.albumDao().insert(
                 Album(
-                    4,
                     "Map of the Soul Persona",
                     "뮤직 보이 (Music Boy)",
                     R.drawable.img_album_exp4,
+                    4
                 )
             )
 
 
             songDB.albumDao().insert(
                 Album(
-                    5,
                     "Great!",
                     "모모랜드 (MOMOLAND)",
-                    R.drawable.img_album_exp5
+                    R.drawable.img_album_exp5,
+                    5
                 )
             )
 
@@ -151,8 +150,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onPlayClick(album: Album) {
-                val songData: Song = album.songs.get(0)
-                listener?.onPlayClick(songData)
+                Log.d("id찾기", "${album.id}")
+
+                listener?.onPlayClick(album.id) // MainActivity로 AlbumId 전달
             }
 
 //            override fun onRemoveAlbum(position: Int) {

@@ -1,5 +1,6 @@
 package com.example.flo
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,28 @@ class SavedSongFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    interface OnSelectClickListener{
+        fun onSelectClick(isSelectOn: Boolean)
+    }
+    private var listener: OnSelectClickListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // MainActivity가 OnSelectClickListener 인터페이스를 구현하고 있는지 확인하고
+        // 구현하고 있다면 listener로 등록합니다.
+        if (context is OnSelectClickListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnSelectClickListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        // Fragment가 Activity에서 분리될 때 listener를 초기화합니다.
+        listener = null
     }
 
     override fun onStart() {

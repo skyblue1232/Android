@@ -7,7 +7,9 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.flo.databinding.ActivitySongBinding
@@ -216,16 +218,38 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
+    private fun initToast(likeText: String){
+        // layoutInflater를 가져옴
+        val inflater =layoutInflater
+
+        // custom_toast 레이아웃 inflate
+        val layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_container))
+
+        // textView text 설정
+        val text = layout.findViewById<TextView>(R.id.likeTv)
+        text.text= likeText
+
+        // 토스트 생성
+        val toast = Toast(applicationContext)
+        toast.duration= Toast.LENGTH_LONG
+        toast.view= layout
+
+        // 위치와 마진 설정
+        toast.setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM, 0, 100)
+
+        toast.show()
+    }
+
     private fun moveSong(direct: Int){
         if (nowPos + direct < 0){
-            //Toast.makeText(this,"first song",Toast.LENGTH_SHORT).show()
-            CustomSnackbar.make(binding.root, "첫 곡").show()
+            Toast.makeText(this@SongActivity,"first song",Toast.LENGTH_SHORT).show()
+            // CustomSnackbar.make(binding.root, "첫 곡").show()
             return
         }
 
         else if (nowPos + direct >= songs.size){
-            //Toast.makeText(this,"last song",Toast.LENGTH_SHORT).show()
-            CustomSnackbar.make(binding.root, "마지막 곡").show()
+            Toast.makeText(this@SongActivity,"last song",Toast.LENGTH_SHORT).show()
+            // CustomSnackbar.make(binding.root, "마지막 곡").show()
             return
         }
 

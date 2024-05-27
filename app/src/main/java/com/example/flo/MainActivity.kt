@@ -14,13 +14,13 @@ import com.example.flo.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), HomeFragment.OnPlayClickListener {
 
     lateinit var binding: ActivityMainBinding
-    private var Mainsong: Song = Song()
     // private var gson: Gson = Gson()
     private var mediaPlayer: MediaPlayer? = null
 
     val songs = arrayListOf<Song>()
     lateinit var songDB: SongDatabase
     var nowPos = 0
+
 
 
     private val getResultText = registerForActivityResult(
@@ -139,6 +139,18 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnPlayClickListener {
 
     }
 
+    private fun initClickListener(){
+        binding.mainPlayerCl.setOnClickListener{
+            val editor = getSharedPreferences("song",MODE_PRIVATE).edit()
+            editor.putInt("songId", songs[nowPos].id)
+            editor.apply()
+
+            val intent = Intent(this, SongActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
     override fun onStart() {
         super.onStart()
 //        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
@@ -185,7 +197,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnPlayClickListener {
     }
 
     private fun initPlayList(){
-        songDB = SongDatabase.getInstance(this)!!
+        songDB = SongDatabase.getInstance(this@MainActivity)!!
         songs.addAll(songDB.songDao().getSongs())
     }
 
@@ -199,12 +211,77 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnPlayClickListener {
         binding.mainProgressSb.progress = (second * 100000 / song.playTime)
     }
 
-    fun onPlayClick(songData: Album) {
-        Mainsong = songData
-        Mainsong.isPlaying = true
-        setMiniPlayer(Mainsong)
-        mediaPlayer?.start()
+    private fun moveSong(direct: Int){
+        if(nowPos + direct < 0 ){
+            Toast.makeText(this@MainActivity, "first song", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(nowPos + direct >= songs.size){
+            Toast.makeText(this@MainActivity, "last song", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        nowPos += direct
+
+        mediaPlayer?.release() // 미디어 플레이어가 갖고 있던 리소스 해제
+        mediaPlayer = null // 미디어 플레이어 해제
+
+        setMiniPlayer(songs[nowPos])
     }
+
+
+    override fun onPlayClick(songData: Int) {
+        songs[nowPos].isPlaying = false
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+
+        songs.clear()   // 재생하려고 넣어놨던 데이터들을 제거
+        Log.d("id찾기", "${songs[nowPos].id}")
+
+        // 앨범 아이디가 같은 모든 song을 불러와서 songs에 넣는다
+        songs.addAll(songDB.songDao().getSongsByalbumIdx(songs[nowPos].id))
+        // 처음 곡부터 재생할 것이므로 nowPos 초기화
+        nowPos = 0
+        if(songs.isNotEmpty()) {
+            songs[nowPos].isPlaying = true
+            setMiniPlayer(songs[nowPos])
+        } else {
+            Log.d("id찾기", "빔")
+        }
+    }
+
+//    override fun onSelectClick(isSelectOn: Boolean) {
+//        // 삭제 등의 작업을 진행하는 창이 올라옴
+//        if(isSelectOn){
+//            //Toast.makeText(this@MainActivity, "true넘어옴", Toast.LENGTH_SHORT).show()
+//            chooseBottom(isSelectOn)
+//
+//            binding.sheetBnv.setOnItemSelectedListener{item->
+//                when(item.itemId) {
+//                    R.id.btn_delete-> {
+//                        chooseBottom(isSelectOn)
+//                        songDB.songDao().updateIsLikeAllFalse()
+//
+//                        val fragment = SavedSongFragment()
+//                        fragment.deleteAll()
+//
+//                        chooseBottom(false)
+//
+//                        return@setOnItemSelectedListener true
+//                    }
+//
+//                    else -> {
+//                        return@setOnItemSelectedListener true
+//                    }
+//                }
+//            }
+//
+//        }else{
+//            //Toast.makeText(this@MainActivity, "false넘어옴", Toast.LENGTH_SHORT).show()
+//            chooseBottom(isSelectOn)
+//        }
+//    }
 
     private fun inputDummySongs(){
         val songDB = SongDatabase.getInstance(this)!!
