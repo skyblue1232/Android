@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
         <TextView
             android:id="@+id/locker_title_tv"
             android:layout_width="wrap_content"
@@ -53,6 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체선택"
+            android:textSize="16dp"
+            android:layout_marginStart="3dp"
+            android:textStyle="bold"
             android:textColor="@color/gray_color"
             app:layout_constraintStart_toEndOf="@id/locker_select_all_img_iv"
             app:layout_constraintTop_toTopOf="@id/locker_select_all_img_iv"
@@ -73,6 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체듣기"
+            android:textSize="16dp"
+            android:textStyle="bold"
             android:textColor="@color/gray_color"
             app:layout_constraintTop_toTopOf="@id/locker_select_all_img_iv"
             app:layout_constraintBottom_toBottomOf="@id/locker_select_all_img_iv"
@@ -82,7 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="편집"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="13dp"
+            android:textSize="16dp"
             android:textColor="@color/gray_color"
             app:layout_constraintTop_toTopOf="@id/locker_select_all_img_iv"
             app:layout_constraintBottom_toBottomOf="@id/locker_select_all_img_iv"

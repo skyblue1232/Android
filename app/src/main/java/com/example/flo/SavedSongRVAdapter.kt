@@ -1,101 +1,49 @@
 package com.example.flo
-
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.MusicItemBinding
 
-class SavedSongRVAdapter(): RecyclerView.Adapter<SavedSongRVAdapter.ViewHolder>() {
-
-    private val Status = SparseBooleanArray()
-    private val songs = ArrayList<Song>()
-    interface SavedSongClickListener{
-        fun onRemoveSavedSong(songId: Int)
-
-        fun onSaveSavedSong(songId: Int)
+class SavedSongRVAdapter(private val songs: ArrayList<Song> = ArrayList()) :
+    RecyclerView.Adapter<SavedSongRVAdapter.ViewHolder>() {
+    interface MyItemClickListener{
+        fun onRemoveSong(songId: Int)
     }
-
-    private lateinit var mItemClickListener: SavedSongClickListener
-
-    fun setSavedSongClickListener(itemClickListener: SavedSongClickListener){
+    private lateinit var mItemClickListener: MyItemClickListener
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
         mItemClickListener = itemClickListener
     }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun removeSong(position: Int){
-        songs.removeAt(position)
-        Status.delete(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount)
-    }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun addSong(position: Int){
-        songs.add(songs[position])
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SavedSongRVAdapter.ViewHolder {
-        val binding: MusicItemBinding = MusicItemBinding
-            .inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+        val binding: MusicItemBinding = MusicItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ViewHolder(binding)
+    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(songs[position])
+        holder.binding.itemSongMoreIv.setOnClickListener {
+            mItemClickListener.onRemoveSong(songs[position].id)
+            removeSong(position)
+        }
+
     }
 
     override fun getItemCount(): Int = songs.size
-
-    override fun onBindViewHolder(holder: SavedSongRVAdapter.ViewHolder, position: Int) {
-        holder.bind(songs[position])
-
-        holder.binding.itemSongMoreIv.setOnClickListener{
-            mItemClickListener.onRemoveSavedSong(songs[position].id)}
-            //좋아요 취소
-            removeSong(position) // 현재 화면에서 아이템 제거
-
-        holder.binding.mainSwitch.isChecked = holder.binding.mainSwitch.isChecked
-
-        holder.binding.itemSongMoreIv.setOnClickListener{
-            mItemClickListener.onSaveSavedSong(songs[position].id)}
-
-            addSong(position)
-
-    }
-
-    inner class ViewHolder(val binding: MusicItemBinding): RecyclerView.ViewHolder(binding.root){
-
-        fun bind(album: Song){
-            binding.itemSongTitleTv.text= album.title
-            binding.itemSongSingerTv.text= album.singer
-            binding.itemSongImgIv.setImageResource(album.coverImg!!)
-
-            if (!binding.mainSwitch.isChecked) {
-                binding.root.setBackgroundColor(Color.WHITE)
-            }
-            else {
-                binding.root.setBackgroundColor(Color.DKGRAY)
-            }
-
-            binding.mainSwitch.isChecked= Status[adapterPosition]
-            binding.mainSwitch.setOnClickListener{
-                if (!binding.mainSwitch.isChecked)
-                    Status.put(adapterPosition, false)
-                else
-                    Status.put(adapterPosition, true)
-                notifyItemChanged(adapterPosition)
-            }
-        }
-    }
     @SuppressLint("NotifyDataSetChanged")
-    fun addSongs(songs: ArrayList<Song>) {
+    fun addSongs(newSongs: ArrayList<Song>) {
         this.songs.clear()
-        this.songs.addAll(songs)
-
+        this.songs.addAll(newSongs)
         notifyDataSetChanged()
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    private fun removeSong(position: Int) {
+        songs.removeAt(position)
+        notifyDataSetChanged()
+    }
+    inner class ViewHolder(val binding: MusicItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(song: Song) {
+            binding.itemSongImgIv.setImageResource(song.coverImg!!)
+            binding.itemSongTitleTv.text = song.title
+            binding.itemSongSingerTv.text = song.singer
+        }
+    }
 }
