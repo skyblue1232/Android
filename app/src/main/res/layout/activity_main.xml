@@ -1,133 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <FrameLayout
-        android:id="@+id/main_frm"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/main_player_cl"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SeekBar
-        android:id="@+id/main_progress_sb"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:paddingEnd="0dp"
-        android:paddingStart="0dp"
-        android:layout_marginBottom="-3dp"
-        android:progressBackgroundTint="@color/song_player_bg"
-        android:progressTint="@color/song_player"
-        android:progress="0"
-        android:max="100000"
-        android:thumb="@color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/main_player_cl" />
-
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_player_cl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/main_bnv"
-        android:paddingVertical="5dp"
-        android:background="#F9F9F9">
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <LinearLayout
-            android:id="@+id/main_music_layout_Ll"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:id="@+id/main_frm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/main_player_cl"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_player_cl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/main_bnv"
+            android:background="#F9F9F9">
+
+            <SeekBar
+                android:id="@+id/main_progress_sb"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@null"
+                android:paddingHorizontal="0dp"
+                android:progress="0"
+                android:progressBackgroundTint="@color/song_player_bg"
+                android:progressTint="@color/song_player"
+                android:thumb="@color/transparent"
+                android:max="100000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout1"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/main_playing_song_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="너의 모든 순간"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/main_playing_singer_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="성시경"/>
+
+            </LinearLayout>
+
+            <!--            <Button-->  <!--Foreground-->
+            <!--                android:id="@+id/start_serv_btn"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:text="1"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/stop_serv_btn"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/linearLayout1"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/stop_serv_btn"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:text="0"-->
+            <!--                android:layout_marginEnd="5dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/linearLayout"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/main_back_song_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/btn_miniplayer_previous" />
+
+                <ImageView
+                    android:id="@+id/main_miniplayer_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/btn_miniplayer_play" />
+
+                <ImageView
+                    android:id="@+id/main_pause_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/btn_miniplay_pause"
+                    android:visibility="gone" />
+
+
+                <ImageView
+                    android:id="@+id/main_next_song_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/btn_miniplayer_next" />
+
+
+                <ImageView
+                    android:id="@+id/testbtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:src="@drawable/btn_miniplayer_go_list" />
+
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/main_bnv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:itemIconSize="20dp"
+            app:itemIconTint="@drawable/btm_color_selector"
+            app:itemTextColor="@drawable/btm_color_selector"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/main_miniplayer_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="LILAC"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/main_miniplayer_singer_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="아이유(IU)"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/main_music_layout_02_Ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_menu" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/sheet_bnv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3f3fff"
+            android:visibility="gone"
+            app:itemIconSize="20dp"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/music_play_back_Iv"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_miniplayer_previous" />
-
-            <ImageView
-                android:id="@+id/main_miniplayer_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_miniplayer_play"/>
-
-            <ImageView
-                android:id="@+id/main_pause_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:visibility="gone"
-                android:src="@drawable/btn_miniplay_pause"/>
-
-
-            <ImageView
-                android:id="@+id/main_play_go_Iv"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_miniplayer_next" />
-
-
-            <ImageView
-                android:id="@+id/main_play_random_Iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/btn_miniplayer_go_list"
-                android:layout_marginHorizontal="15dp" />
-
-
-        </LinearLayout>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_sheet_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/main_bnv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="20dp"
-        app:itemIconTint="@drawable/btm_color_selector"
-        app:itemTextColor="@drawable/btm_color_selector"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

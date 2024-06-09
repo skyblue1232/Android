@@ -1,6 +1,7 @@
 package com.example.flo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.flo.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -32,11 +34,25 @@ class AlbumFragment : Fragment() {
 
         // Home에서 넘어온 데이터 받아오기
         val albumJson = arguments?.getString("album")
-        val album = gson.fromJson(albumJson, Album::class.java)
+        val gson = Gson()
+        val album = gson.fromJson(albumJson, FloChartAlbums::class.java)
         // Home에서 넘어온 데이터를 반영
-        isLiked = isLikedAlbum(album.id)
+        //isLiked = isLikedAlbum(album.id)
+        //setInit(album)
+        //setOnClickListeners(album)
+
+        val sharedPreferences = activity?.getSharedPreferences("album", AppCompatActivity.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putString("albumIdx", "${album.albumIdx}")
+        editor?.apply()
+
+        // Home에서 넘어온 데이터 반영
+        isLiked = isLikedAlbum(album.albumIdx)
         setInit(album)
         setOnClickListeners(album)
+
+        initViewPager()
+        initAlbumback()
 
         binding.albumBackIv.setOnClickListener {
             (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -53,10 +69,41 @@ class AlbumFragment : Fragment() {
         return binding.root
     }
 
-    private fun setInit(album: Album) {
-        binding.albumAlbumIv.setImageResource(album.coverImg!!)
+    private fun initAlbumback(){
+        binding.albumBackIv.setOnClickListener {
+            val homeFragment = HomeFragment()
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_frm, homeFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun initViewPager(){
+        with(binding){
+            val adapter = AlbumVPAdapter(this@AlbumFragment)
+            albumContentVp.adapter = adapter
+            // TabLayout과 ViewPager2를 연결하는 중재자
+            // Tab이 선택될 때 ViewPager2의 위치와 선택된 탭을 동기화하고
+            // 사용자가 ViewPager2를 스크롤 할 때 TabLayout의 스크롤 위치를 동기화한다.
+            TabLayoutMediator(albumContentTb, albumContentVp){
+                    tab, position ->
+                tab.text = information[position]
+            }.attach()
+        }
+    }
+
+    private fun setInit(album: FloChartAlbums) {
+        // binding.albumAlbumIv.setImageResource(album.coverImg!!)
         binding.albumMusicTitleTv.text = album.title.toString()
         binding.albumSingerNameTv.text = album.singer.toString()
+        if(album.coverImgUrl == "" || album.coverImgUrl == null){
+
+        } else {
+            Log.d("image",album.coverImgUrl )
+            Glide.with(requireContext()).load(album.coverImgUrl).into(binding.albumAlbumIv)
+        }
+
         if (isLiked) {
             binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
         } else {
@@ -105,15 +152,15 @@ class AlbumFragment : Fragment() {
         songDB.albumDao().disLikeAlbum(userId, albumId)
     }
 
-    private fun setOnClickListeners(album: Album) {
+    private fun setOnClickListeners(album: FloChartAlbums) {
         val userId = getJwt()
         binding.albumLikeIv.setOnClickListener {
             if (isLiked) {
                 binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
-                disLikedAlbum(album.id)
+                disLikedAlbum(album.albumIdx)
             } else {
                 binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
-                likeAlbum(userId, album.id)
+                likeAlbum(userId, album.albumIdx)
             }
         }
     }
