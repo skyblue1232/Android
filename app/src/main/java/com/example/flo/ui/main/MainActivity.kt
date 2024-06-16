@@ -1,6 +1,7 @@
-package com.example.flo
+package com.example.flo.ui.main
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -9,7 +10,23 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.android.identity.android.legacy.Utility
+import com.android.volley.ClientError
+import com.example.flo.ApplicationClass.Companion.TAG
+import com.example.flo.ui.main.look.LookFragment
+import com.example.flo.R
+import com.example.flo.ui.main.search.SearchFragment
+import com.example.flo.ui.song.SongActivity
+import com.example.flo.ui.song.SongDatabase
+import com.example.flo.TestActivity
+import com.example.flo.data.entities.Album
+import com.example.flo.data.entities.Result
+import com.example.flo.data.entities.Song
 import com.example.flo.databinding.ActivityMainBinding
+import com.example.flo.ui.main.home.HomeFragment
+import com.example.flo.ui.main.locker.LockerFragment
+import com.example.flo.ui.signin.LoginView
+import com.google.api.OAuthRequirements
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity(), LoginView {
@@ -40,6 +57,9 @@ class MainActivity : AppCompatActivity(), LoginView {
         setTheme(R.style.Theme_FLO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //해시키값 구하기 (Terminal 보다 이게 더 정확함)
+        Log.d(TAG, "keyhash : ${Utility.getKeyHash(this)}")
 
 
         initPlayList()
@@ -265,6 +285,47 @@ class MainActivity : AppCompatActivity(), LoginView {
 
     }
 
+    private val mCallback: (OAuthRequirements?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Log.e(ContentValues.TAG, "로그인 실패 $error")
+        } else if (token != null) {
+            Log.e(ContentValues.TAG, "로그인 성공 ${token.accessToken}")
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+// 카카오톡 설치 확인
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+            // 카카오톡 로그인
+            UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
+                // 로그인 실패 부분
+                if (error != null) {
+                    Log.e(ContentValues.TAG, "로그인 실패 $error")
+                    // 사용자가 취소
+                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                        return@loginWithKakaoTalk
+                    }
+                    // 다른 오류
+                    else {
+                        UserApiClient.instance.loginWithKakaoAccount(
+                            this,
+                            callback = mCallback
+                        ) // 카카오 이메일 로그인
+                    }
+                }
+                // 로그인 성공 부분
+                else if (token != null) {
+                    Log.e(ContentValues.TAG, "로그인 성공 ${token.accessToken}")
+                }
+            }
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(this, callback = mCallback) // 카카오 이메일 로그인
+        }
+    }
+}
+
 
     private fun initBottomNavigation() {
 
@@ -313,29 +374,40 @@ class MainActivity : AppCompatActivity(), LoginView {
 
         if (songs.isNotEmpty()) return
 
-        songDB.songDao().insert(Song(1, "Lilac", "아이유 (IU)", 0, 150, false, "music_lilac", R.drawable.img_album_exp2, false
+        songDB.songDao().insert(
+            Song(1, "Lilac", "아이유 (IU)", 0, 150, false, "music_lilac",
+                R.drawable.img_album_exp2, false
             )
         )
 
-        songDB.songDao().insert(Song(2, "Flu", "아이유 (IU)", 0, 170, false, "music_flu", R.drawable.img_album_exp2, false,
+        songDB.songDao().insert(
+            Song(2, "Flu", "아이유 (IU)", 0, 170, false, "music_flu", R.drawable.img_album_exp2, false,
             )
         )
 
-        songDB.songDao().insert(Song(3, "Butter", "방탄소년단 (BTS)", 0, 190, false, "music_butter", R.drawable.img_album_exp, false
+        songDB.songDao().insert(
+            Song(3, "Butter", "방탄소년단 (BTS)", 0, 190, false, "music_butter",
+                R.drawable.img_album_exp, false
             )
         )
 
-        songDB.songDao().insert(Song(4, "Next Level", "에스파 (AESPA)", 0, 210, false, "music_next", R.drawable.img_album_exp3, false
+        songDB.songDao().insert(
+            Song(4, "Next Level", "에스파 (AESPA)", 0, 210, false, "music_next",
+                R.drawable.img_album_exp3, false
             )
         )
 
 
-        songDB.songDao().insert(Song(5, "Boy with Luv", "방탄소년단(BTS)", 0, 230, false, "music_boy", R.drawable.img_album_exp4, false
+        songDB.songDao().insert(
+            Song(5, "Boy with Luv", "방탄소년단(BTS)", 0, 230, false, "music_boy",
+                R.drawable.img_album_exp4, false
             )
         )
 
 
-        songDB.songDao().insert(Song(6, "BBoom BBoom", "모모랜드 (MOMOLAND)", 0, 250, false, "music_bboom", R.drawable.img_album_exp5, false
+        songDB.songDao().insert(
+            Song(6, "BBoom BBoom", "모모랜드 (MOMOLAND)", 0, 250, false, "music_bboom",
+                R.drawable.img_album_exp5, false
             )
         )
 
@@ -352,29 +424,35 @@ class MainActivity : AppCompatActivity(), LoginView {
         if (albums.isNotEmpty()) return
 
         // songs에 데이터 없어서 더미 데이터 삽입 필요.
-        songDB.albumDao().insert(Album(1, "Lilac", "아이유 (IU)", R.drawable.img_album_exp2
+        songDB.albumDao().insert(
+            Album(1, "Lilac", "아이유 (IU)", R.drawable.img_album_exp2
             )
         )
 
-        songDB.albumDao().insert(Album(2, "Flu", "아이유 (IU)", R.drawable.img_album_exp2
+        songDB.albumDao().insert(
+            Album(2, "Flu", "아이유 (IU)", R.drawable.img_album_exp2
             )
         )
 
-        songDB.albumDao().insert(Album(3, "Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp
+        songDB.albumDao().insert(
+            Album(3, "Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp
             )
         )
 
-        songDB.albumDao().insert(Album(4, "Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3
+        songDB.albumDao().insert(
+            Album(4, "Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3
             )
         )
 
 
-        songDB.albumDao().insert(Album(5, "Boy with Luv", "방탄소년단(BTS)", R.drawable.img_album_exp4
+        songDB.albumDao().insert(
+            Album(5, "Boy with Luv", "방탄소년단(BTS)", R.drawable.img_album_exp4
             )
         )
 
 
-        songDB.albumDao().insert(Album(6, "BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5
+        songDB.albumDao().insert(
+            Album(6, "BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5
             )
         )
 
